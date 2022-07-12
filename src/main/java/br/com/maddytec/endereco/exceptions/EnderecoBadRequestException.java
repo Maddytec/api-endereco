@@ -10,4 +10,8 @@ public class EnderecoBadRequestException extends RuntimeException {
         super("Cep: " + cep + " não encontrado ou Inválido");
     }
 
+    public EnderecoBadRequestException(String uf, String cidade, String bairro) {
+        super("Endereço Inválido.");
+    }
+
 }
