@@ -2,10 +2,14 @@ package br.com.maddytec.endereco.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -33,16 +37,8 @@ public class EnderecoViaCepResponseDTO {
                 .build();
     }
     public List<EnderecoResponseDTO> toList(List<EnderecoViaCepResponseDTO> enderecoViaCepResponseDTOList){
-        List<EnderecoResponseDTO> enderecoResponseDTOList = new ArrayList<>();
-        enderecoViaCepResponseDTOList.forEach(enderecoViaCepResponseDTO -> {
-            enderecoResponseDTOList.add(EnderecoResponseDTO.builder()
-                            .cep(enderecoViaCepResponseDTO.getCep())
-                            .uf(enderecoViaCepResponseDTO.getUf())
-                            .cidade(enderecoViaCepResponseDTO.getLocalidade())
-                            .bairro(enderecoViaCepResponseDTO.getBairro())
-                            .logradouro(enderecoViaCepResponseDTO.getLogradouro())
-                    .build());
-        });
-        return enderecoResponseDTOList;
+        return enderecoViaCepResponseDTOList.stream()
+                .map(EnderecoViaCepResponseDTO::to)
+                .collect(Collectors.toList());
     }
 }
